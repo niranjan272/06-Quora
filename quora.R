@@ -20,27 +20,6 @@ nrow(train_data)
 test <- train_data[,c(4,5)]
 head(test,5)
 
-train_classification <- rpart(is_duplicate~similarity,data = test, method = "class")
-train_classification
-
-test_check <- test_data[,c(4,5)]
-head(test_check,5)
-new = data.frame(test_check$similarity)
-colnames(new)[1] <- "similarity"
-head(new,5)
-test_classification <- predict(train_classification,newdata = new)
-test_classification
-
-unique(test_classification)
-
-
-attach(test)
-plot(similarity, is_duplicate, main="Scatterplot Example", 
-     xlab="Similarity ", ylab="Duplicate ", pch=19)
-
-
-
-
 #Change column names in test data
 names(test_data) <- as.matrix(test_data[1, ])
 test_data <- test_data[-1, ]
@@ -83,12 +62,14 @@ train_classification <- rpart(train_data[,5]~train_data[,4],method = "class")
 test_classification  <- predict(train_classification,newdata = test_data[,4])
 
 #Logistic Regression
+colnames(test_data)
 train_logistic <- glm(is_duplicate ~ similarity,family=binomial(link='logit'),data=train_data)
 summary(train_logistic)
+new = data.frame(test_data$similarity)
 test_logistic  <- predict(train_logistic,newdata = new,type='response')
 head(test_logistic_1,5)
 test_logistic_1 <- as.data.frame(test_logistic)
-check <- ifelse(test_logistic_1$test_logistic > 0.5,1,0)
+check <- test_logistic_1
 head(check)
 check <- as.data.frame(check)
 

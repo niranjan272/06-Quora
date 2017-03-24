@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics import log_loss
 from scipy.optimize import minimize
+import xgboost as xgb
 
 stops = set(stopwords.words("english"))
 
